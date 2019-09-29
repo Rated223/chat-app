@@ -4,14 +4,16 @@
   "description": "socket.io test project",
   "main": "index.js",
   "scripts": {
-    "start": "env-cmd -f ./config/dev.env nodemon --exec babel-node ./src/index.js",
+    "start": "babel-node ./src/index.js",
+    "dev": "env-cmd -f ./config/dev.env nodemon --exec babel-node ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Rated223",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "mongoose": "^5.7.1"
+    "mongoose": "^5.7.1",
+    "socket.io": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
