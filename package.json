@@ -1,0 +1,23 @@
+{
+  "name": "chat-app",
+  "version": "0.1.0",
+  "description": "socket.io test project",
+  "main": "index.js",
+  "scripts": {
+    "start": "env-cmd -f ./config/dev.env nodemon --exec babel-node ./src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rated223",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.7.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.2",
+    "@babel/node": "^7.6.2",
+    "@babel/preset-env": "^7.6.2",
+    "env-cmd": "^10.0.1",
+    "nodemon": "^1.19.3"
+  }
+}
