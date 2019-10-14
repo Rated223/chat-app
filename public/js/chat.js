@@ -1,20 +1,25 @@
 const socket = io();
+const username = localStorage.getItem('username');
+const usercolor = localStorage.getItem('usercolor');
 
-socket.on('message', ({text, createAt}) => {
+socket.on('message', ({text, username, usercolor, createAt}) => {
     console.log(text);
     const html = Mustache.render(document.querySelector('#message-template').innerHTML, {
         text,
+        username: username ? `${username}: ` : '',
+        usercolor,
         date: moment(createAt).format('h:mm a')
     });
     document.querySelector("#messages-container").insertAdjacentHTML('afterbegin', html);
     document.querySelector("#flex-wrapper").scrollTop = document.querySelector("#flex-wrapper").scrollHeight;
 });
 
-socket.on('locationMessage', ({text, createAt}) => {
+socket.on('locationMessage', ({text, username, usercolor, createAt}) => {
     console.log(text);
     const html = Mustache.render(document.querySelector('#link-template').innerHTML, {
         link: text,
-        message: "User Location",
+        message: username ? `${username} Location` : '',
+        usercolor,
         date: moment(createAt).format('h:mm a')
     });
     document.querySelector("#messages-container").insertAdjacentHTML('afterbegin', html);
@@ -37,7 +42,8 @@ const sendMessage = () => {
     if (message !== "") {
         document.querySelector('#send-message-button').setAttribute('disabled', 'disabled');
         document.querySelector('#send-message-button > .loader').style.display = 'inline-block';
-        socket.emit("sendMessage", "User send: "+message, (confirmation) => {
+
+        socket.emit("sendMessage", {message, username, usercolor}, (confirmation) => {
             console.log(confirmation);
             document.querySelector('#send-message-button').removeAttribute('disabled');
             document.querySelector('#send-message-button > .loader').style.display = 'none';
@@ -54,17 +60,12 @@ const sendLocation = () => {
     document.querySelector("#send-location-button").setAttribute('disabled', 'disabled');
     document.querySelector('#send-location-button > .loader').style.display = 'inline-block';
     navigator.geolocation.getCurrentPosition(({coords}) => {
-        const cordinates = { 
-            latitude: coords.latitude, 
-            longitude: coords.longitude
-        };
-        socket.emit('sendLocation', cordinates, (confirmation) => {
+        const latitude = coords.latitude; 
+        const longitude = coords.longitud;
+        socket.emit('sendLocation', {latitude, longitude, username, usercolor}, (confirmation) => {
             console.log(confirmation);
         });
         document.querySelector("#send-location-button").removeAttribute('disabled');
         document.querySelector('#send-location-button > .loader').style.display = 'none';
     });
 }
-
-  
-  

@@ -15,20 +15,25 @@ app.use(express.static(publicDirectory));
 
 io.on('connection', (socket) => {
 
-    socket.emit('message', generateMessage('Welcome!'));
-    socket.broadcast.emit('message', generateMessage('A new user has join to the conversation.'));
+    socket.on('userRegistered', (user, callback) => {
+        //TODO: save here in the list
+        socket.emit('message', generateMessage({message: `Welcome ${user}!`}));
+        socket.broadcast.emit('message', generateMessage({message: 'A new user has join to the conversation.'}));
+        callback('User registered');
+    })
 
-    socket.on('sendMessage', (message, callback) => {
-        io.emit('message', generateMessage(message));
+
+    socket.on('sendMessage', ({message, username, usercolor}, callback) => {
+        io.emit('message', generateMessage({message, username, usercolor}));
         callback('Message delivered');
     });
-    socket.on('sendLocation', ({latitude, longitude}, callback) => {
-        io.emit('locationMessage', generateMessage(`https://google.com/maps?q=${latitude},${longitude}`));
+    socket.on('sendLocation', ({latitude, longitude, username, usercolor}, callback) => {
+        io.emit('locationMessage', generateMessage({message: `https://google.com/maps?q=${latitude},${longitude}`, username, usercolor}));
         callback('Location shared');
     })
 
     socket.on('disconnect', () => {
-        io.emit('message', generateMessage('A user has left the conversation.'));
+        io.emit('message', generateMessage({message: 'A user has left the conversation.'}));
     })
 });
 

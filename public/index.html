@@ -12,10 +12,8 @@
 <body>
     <div id="modal-register">
         <div id="modal-content">
-            <form id="register-form" action="">
-                <input type="text" name="username" id="input-username" placeholder="Escoje un nombre" maxlength="50">
-                <button id="submit-button" type="submit">Entrar</button>
-            </form>
+            <input type="text" name="username" id="input-username" placeholder="Escoje un nombre" maxlength="50" required>
+            <button id="submit-username">Entrar</button>
         </div>
     </div>
 
@@ -45,6 +43,7 @@
 
     <script id="message-template" type="text/html">
         <div class="message">
+            <span class="username-tag" style="color:{{ usercolor }}">{{ username }}</span>
             <span>{{ text }}</span>
             <small>{{ date }}</small>
         </div>
@@ -53,7 +52,7 @@
     <script id="link-template" type="text/html">
         <div class="message">
             <a href="{{ link }}" target="_blank">
-                <span><i class="fas fa-chevron-right"></i> {{ message }}</span>
+                <span class="userlocation-tag" style="color:{{ usercolor }}"><i class="fas fa-chevron-right"></i> {{ message }}</span>
             </a>
             <small>{{ date }}</small>
         </div>
