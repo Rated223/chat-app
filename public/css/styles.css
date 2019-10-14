@@ -1,46 +1,148 @@
+html {
+    font-family: 'Ubuntu', sans-serif;
+    height: 100%;
+}
+
+body {
+    height: 90%;
+    background: #001eff0f;
+    margin: 0;
+}
+
+h1 {
+    text-align: center;
+    background: #000000;
+    color: #FFFFFF;
+    margin: 0;
+    padding: 30px;
+}
+
+small {
+    font-size: 10px;
+    color: #a1a1a1;
+}
+
+#modal-register {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+  
+  /* Modal Content/Box */
+#modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    width: 220px;
+}
+
+#input-username {
+    box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	outline: none;
+	display: block;
+	width: 100%;
+	padding: 7px;
+	border: none;
+	border-bottom: 1px solid #ddd;
+	background: transparent;
+	margin-bottom: 10px;
+	font: 16px Arial, Helvetica, sans-serif;
+	height: 45px;
+}
+
+#submit-button {
+    -moz-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+	-webkit-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+    box-shadow: inset 0px 1px 0px 0px #45D6D6;
+    background: #5590ffc2;
+    border: 1px solid #FFFFFF;
+	display: inline-block;
+	cursor: pointer;
+	color: #FFFFFF;
+	font-family: 'Open Sans Condensed', sans-serif;
+	font-size: 14px;
+	padding: 8px 18px;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+
 #chat-container {
+    background: #FFFFFF;
     display: grid;
     justify-content: start;
-    margin: 20px 100px;
-    grid-template-columns: 90% 10%;
-    grid-template-rows: 90% 5% 5%;
+    align-content: start;
+    /* margin: 30px 100px; */
+    grid-template-columns: 20% 73% 7%;
+    grid-template-rows: 86% 7% 7%;
+    height: 95%;
+}
+
+#users-container{
+    grid-column: 1;
+    grid-row: 1/4;
+    border-right: 10px solid #DDD;
+    background: #323b41;
+    color: #FFF;
+}
+
+#flex-wrapper {
+    grid-column: 2/4;
+    grid-row: 1;
+    min-height: 100%;
+    border: 1px solid #bbbbbb;
+    border-bottom: 0px;
+    border-radius: 5px;
+    overflow: auto;
 }
 
 #messages-container {
-    grid-column: 1/3;
+    grid-column: 2/4;
     grid-row: 1;
     min-height: 100%;
     display: flex;
     flex-direction: column-reverse;
-    border: 1px solid #555555;
-    border-bottom: 0px;
-    border-radius: 5px;
-    
-
 }
 
-#messages-container > div {
-    width: 100%;
-    display: inline-flex;
-}
 
-#messages-container #mes2 {
-    justify-content: end;
+.message{
+    margin: 0px 15px 5px 15px;
+    padding-top: 5px;
+    border-top: 1px solid #bbbbbb73;
+    word-wrap: break-word;
 }
 
 #message-box {
-    grid-column: 1;
+    grid-column: 2;
     grid-row: 2/4;
+    max-height: 100px;
+    border: 1px solid #bbbbbb; 
 }
 
 #send-message-button {
-    grid-column: 2;
+    grid-column: 3;
     grid-row: 2;
 }
 
 #send-location-button {
-    grid-column: 2;
+    grid-column: 3;
     grid-row: 3;
+}
+
+button {
+    background: #5590ffc2;
+    border: 1px solid #FFFFFF;
+    border-radius: 5px;
 }
 
 button > span {
@@ -48,17 +150,21 @@ button > span {
 }
 
 .loader {
-    border: 2px solid #f3f3f3; 
-    border-top: 2px solid #555555; 
+    border: 2px solid #bbbbbb; 
+    border-top: 2px solid #bbbbbb; 
     border-radius: 50%;
     width: 10px;
     height: 10px;
     animation: spin 2s linear infinite;
     display: none;
     margin-right: 5px;
-  }
-  
-  @keyframes spin {
+}
+
+@keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-  }
+}
+
+.fa-location-arrow {
+    transform: rotate(43deg);
+}
