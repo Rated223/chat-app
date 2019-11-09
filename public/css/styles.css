@@ -22,6 +22,18 @@ small {
     color: #a1a1a1;
 }
 
+a {
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: none;
+    opacity: 0.4;
+}
+
+p {
+    margin: 5px;
+}
+
 #modal-register {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -41,8 +53,9 @@ small {
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    /* width: 80%; Could be more or less, depending on screen size */
     width: 220px;
+    height: 130px;
 }
 
 #input-username {
@@ -61,6 +74,14 @@ small {
 	height: 45px;
 }
 
+#color-picker-continer {
+    width: 100%;
+}
+
+#input-usercolor {
+    width: inherit;
+}
+
 #submit-username {
     -moz-box-shadow: inset 0px 1px 0px 0px #45D6D6;
 	-webkit-box-shadow: inset 0px 1px 0px 0px #45D6D6;
@@ -74,7 +95,8 @@ small {
 	font-size: 14px;
 	padding: 8px 18px;
 	text-decoration: none;
-	text-transform: uppercase;
+    text-transform: uppercase;
+    margin-top: 10px;
 }
 
 #chat-container {
@@ -127,6 +149,11 @@ small {
     grid-row: 2/4;
     max-height: 100px;
     border: 1px solid #bbbbbb; 
+    resize: none;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 15px;
+    color: #777777;
+    padding: 4px;
 }
 
 #send-message-button {
