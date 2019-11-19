@@ -4,6 +4,7 @@ import  socketio from "socket.io";
 
 import { app, express } from './app';
 import { generateMessage } from './utils/messages';
+import { addUser, removeUser, getUser, getUsersInRoom } from './utils/users';
 
 const server = http.createServer(app);
 const io = socketio(server);
@@ -15,25 +16,54 @@ app.use(express.static(publicDirectory));
 
 io.on('connection', (socket) => {
 
-    socket.on('userRegistered', (user, callback) => {
-        //TODO: save here in the list
-        socket.emit('message', generateMessage({message: `Welcome ${user}!`}));
-        socket.broadcast.emit('message', generateMessage({message: 'A new user has join to the conversation.'}));
-        callback('User registered');
-    })
+    socket.on('join', ({ username, room }, callback) => {
+        const { error, user } = addUser({ id: socket.id, username, room });
 
+        if (error) {
+            return callback(error);
+        }
+
+        socket.join(user.room);
+        socket.emit('message', generateMessage({message: `Welcome ${user.username}!`}));
+        socket.broadcast.to(user.room).emit('message', generateMessage({message: `${user.username} has join to the conversation.`}));
+        io.to(user.room).emit('roomData', {
+            room: user.room,
+            users: getUsersInRoom({ room: user.room })
+        });
+        callback();
+    });
 
     socket.on('sendMessage', ({message, username, usercolor}, callback) => {
-        io.emit('message', generateMessage({message, username, usercolor}));
-        callback('Message delivered');
+        const { error, user } = getUser({ id: socket.id });
+
+        if (error) {
+            return callback(error);
+        }
+        
+        io.to(user.room).emit('message', generateMessage({message, username, usercolor}));
+        callback();
     });
+
     socket.on('sendLocation', ({latitude, longitude, username, usercolor}, callback) => {
-        io.emit('locationMessage', generateMessage({message: `https://google.com/maps?q=${latitude},${longitude}`, username, usercolor}));
-        callback('Location shared');
+        const { error, user } = getUser({ id: socket.id });
+
+        if (error) {
+            return callback(error);
+        }
+
+        io.to(user.room).emit('locationMessage', generateMessage({message: `https://google.com/maps?q=${latitude},${longitude}`, username, usercolor}));
+        callback();
     })
 
     socket.on('disconnect', () => {
-        io.emit('message', generateMessage({message: 'A user has left the conversation.'}));
+        const user = removeUser({ id: socket.id });
+        if (user) {
+            io.to(user.room).emit('roomData', {
+                room: user.room,
+                users: getUsersInRoom({ room: user.room })
+            })
+            io.to(user.room).emit('message', generateMessage({message: `${user.username} has left the conversation.`}));
+        }
     })
 });
 

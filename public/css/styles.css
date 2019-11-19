@@ -54,11 +54,11 @@ p {
     padding: 20px;
     border: 1px solid #888;
     /* width: 80%; Could be more or less, depending on screen size */
-    width: 220px;
-    height: 130px;
+    width: 420px;
 }
 
-#input-username {
+#input-username,
+#input-roomname {
     box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -99,6 +99,13 @@ p {
     margin-top: 10px;
 }
 
+#room-choise-container {
+    margin-top: 20px;
+}
+#room-choise-container label {
+    margin-right: 15px;
+}
+
 #chat-container {
     background: #FFFFFF;
     display: grid;
@@ -116,6 +123,22 @@ p {
     border-right: 10px solid #DDD;
     background: #323b41;
     color: #FFF;
+}
+
+.room-title {
+    text-align: center;
+    background: #333;
+    width: 100%;
+    margin: 0;
+    padding: 15px 0;
+}
+
+.list-title{
+    margin: 15px;
+}
+
+.users-list li {
+    list-style: none;
 }
 
 #flex-wrapper {
